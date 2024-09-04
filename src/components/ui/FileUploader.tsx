@@ -6,12 +6,12 @@ import { PropsWithChildren } from "react";
 
 export default function FileUploader() {
   return (
-    <Card>
+    <Card className="w-[30rem] m-auto">
       <CardContent className="p-6 space-y-4">
         <div className="border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center">
           <FileIcon />
           <span className="text-sm font-medium text-gray-500">
-            Drag and drop a file or click to browse
+            Drag and drop a image or click to browse
           </span>
           <span className="text-xs text-gray-500">Image</span>
         </div>
