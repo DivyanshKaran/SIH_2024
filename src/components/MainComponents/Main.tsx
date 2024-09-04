@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import FileUploader from "../ui/FileUploader";
 import EnviormentFactors from "./EnviormentFactors";
 
@@ -67,11 +68,33 @@ const propData = {
 };
 
 function Main() {
+  // const [positiion, setPosition] = useState({ lat: 0, lng: 0 });
+  // const [error, setError] = useState("");
+
+  // function getPosition() {
+  //   if (!navigator.geolocation) {
+  //     setError("Please give permission to fetch us your location");
+  //     return;
+  //   }
+  //   navigator.geolocation.getCurrentPosition(
+  //     (pos) => {
+  //       // console.log(pos.coords);
+  //       setPosition({
+  //         lat: pos.coords.latitude,
+  //         lng: pos.coords.longitude,
+  //       });
+  //     },
+  //     (error) => {
+  //       setError("Please give permission to fetch us your location");
+  //     }
+  //   );
+  // }
+  // useEffect(getPosition, []);
   return (
     <div className="flex flex-col content-center gap-12">
       <h1 className="">Welcome,Please upload your Crop Image here</h1>
       <FileUploader />
-      <EnviormentFactors data={propData} />
+      <EnviormentFactors />
     </div>
   );
 }
