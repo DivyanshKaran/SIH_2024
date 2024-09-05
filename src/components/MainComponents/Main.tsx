@@ -1,103 +1,119 @@
-import { useEffect, useState } from "react";
-import FileUploader from "../ui/FileUploader";
+// import FileUploader from "../ui/FileUploader";
 import EnviormentFactors from "./EnviormentFactors";
 import { Button } from "../ui/button";
+import { z } from "zod";
+import {
+  Form,
+  // FormControl,
+  FormField,
+  // FormItem,
+  // FormLabel,
+  // FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Card, CardContent } from "../ui/card";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "../ui/input";
+import { useState } from "react";
 
-const data = {
-  coord: {
-    lon: 10.99,
-    lat: 44.34,
-  },
-  weather: [
-    {
-      id: 501,
-      main: "Rain",
-      description: "moderate rain",
-      icon: "10d",
-    },
-  ],
-  base: "stations",
-  main: {
-    temp: 298.48,
-    feels_like: 298.74,
-    temp_min: 297.56,
-    temp_max: 300.05,
-    pressure: 1015,
-    humidity: 64,
-    sea_level: 1015,
-    grnd_level: 933,
-  },
-  visibility: 10000,
-  wind: {
-    speed: 0.62,
-    deg: 349,
-    gust: 1.18,
-  },
-  rain: {
-    "1h": 3.16,
-  },
-  clouds: {
-    all: 100,
-  },
-  dt: 1661870592,
-  sys: {
-    type: 2,
-    id: 2075663,
-    country: "IT",
-    sunrise: 1661834187,
-    sunset: 1661882248,
-  },
-  timezone: 7200,
-  id: 3163858,
-  name: "Zocca",
-  cod: 200,
-};
-
-const propData = {
-  temprature: data.main.temp,
-  feels_like: data.main.feels_like,
-  pressure: data.main.pressure,
-  humidity: data.main.humidity,
-  sea_level: data.main.sea_level,
-  grnd_level: data.main.grnd_level,
-  wind_speed: data.wind.speed,
-  wind_degree: data.wind.deg,
-  wind_gust: data.wind.gust,
-  clouds: data.clouds.all,
-  city: data.name,
-  time: new Date(data.dt),
-};
+const formSchema = z.object({
+  file: z.instanceof(FileList).optional(),
+});
 
 function Main() {
-  // const [positiion, setPosition] = useState({ lat: 0, lng: 0 });
-  // const [error, setError] = useState("");
-
-  // function getPosition() {
-  //   if (!navigator.geolocation) {
-  //     setError("Please give permission to fetch us your location");
-  //     return;
-  //   }
-  //   navigator.geolocation.getCurrentPosition(
-  //     (pos) => {
-  //       // console.log(pos.coords);
-  //       setPosition({
-  //         lat: pos.coords.latitude,
-  //         lng: pos.coords.longitude,
-  //       });
-  //     },
-  //     (error) => {
-  //       setError("Please give permission to fetch us your location");
-  //     }
-  //   );
-  // }
-  // useEffect(getPosition, []);
+  const [markup, setMarkup] = useState("");
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+  const fileRef = form.register("file");
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    let formData = new FormData();
+    // console.log(data.file[0]);
+    formData.append("file", data.file[0]);
+    // console.log(formData);
+    // fetch("http://localhost:3000/predict", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     // if (data.errors) {
+    //     //   alert(data.errors);
+    //     // } else {
+    //     console.log(data);
+    //     setMarkup(data);
+    //     // }
+    //   });
+  };
   return (
     <div className="flex flex-col content-center gap-12">
       <h1 className="">Welcome,Please upload your Crop Image here</h1>
-      <FileUploader />
-      <EnviormentFactors />
-      <Button size="lg">Predict</Button>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col content-center gap-12"
+        >
+          {" "}
+          <FormField
+            control={form.control}
+            name="file"
+            render={({ field }) => {
+              return (
+                <Card className="w-[30rem] m-auto">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center">
+                      <FileIcon />
+                      <span className="text-sm font-medium text-gray-500">
+                        Drag and drop a image or click to browse
+                      </span>
+                      <span className="text-xs text-gray-500">Image</span>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <Label htmlFor="file" className="text-sm font-medium">
+                        File
+                      </Label>
+                      <Input
+                        id="file"
+                        type="file"
+                        placeholder="File"
+                        // accept="image/*"
+                        {...fileRef}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            }}
+          />
+          <EnviormentFactors />
+          <Button type="submit" size="lg">
+            Predict
+          </Button>
+        </form>
+      </Form>
+      {markup}
     </div>
+  );
+}
+
+function FileIcon(props: PropsWithChildren) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+    </svg>
   );
 }
 
