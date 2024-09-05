@@ -27,25 +27,31 @@ function Main() {
     resolver: zodResolver(formSchema),
   });
   const fileRef = form.register("file");
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async function (data: z.infer<typeof formSchema>) {
+    if (!data.file[0]) return;
     let formData = new FormData();
-    console.log(data);
-    console.log(data.file[0]);
     formData.append("file", data.file[0]);
-    // console.log(formData);
-    // fetch("http://127.0.0.1:8000/predict", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     // if (data.errors) {
-    //     //   alert(data.errors);
-    //     // } else {
-    //     console.log(data);
-    //     setMarkup(data);
-    //     // }
-    //   });
+    // for (let pair of formData.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // }
+    fetch("http://127.0.0.1:8000/predict", {
+      method: "POST",
+      body: formData,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        // if (data.errors) {
+        //   alert(data.errors);
+        // } else {
+        console.log(data);
+        setMarkup(data);
+        // }
+      });
+    // const res = await fetch("http://127.0.0.1:8000/", {
+    //   mode: "no-cors",
+    // });
+    // const r = await res.json();
+    // console.log(res);
   };
   return (
     <div className="flex flex-col content-center gap-12">
