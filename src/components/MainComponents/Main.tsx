@@ -32,7 +32,7 @@ function Main() {
     let formData = new FormData();
     formData.append("file", data.file[0]);
     // for (let pair of formData.entries()) {
-    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // console.log(`${pair[0]}: ${pair[1]}`);
     // }
     fetch("http://127.0.0.1:8000/predict", {
       method: "POST",
