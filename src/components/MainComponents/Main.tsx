@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FileUploader from "../ui/FileUploader";
 import EnviormentFactors from "./EnviormentFactors";
+import { Button } from "../ui/button";
 
 const data = {
   coord: {
@@ -95,6 +96,7 @@ function Main() {
       <h1 className="">Welcome,Please upload your Crop Image here</h1>
       <FileUploader />
       <EnviormentFactors />
+      <Button size="lg">Predict</Button>
     </div>
   );
 }

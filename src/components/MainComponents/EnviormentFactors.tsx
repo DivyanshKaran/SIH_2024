@@ -153,19 +153,19 @@ export default function EnviormentFactors() {
     const weatherData = {
       current: {
         // time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-        temperature2m: current.variables(0)!.value().toFixed(2),
-        relativeHumidity2m: current.variables(1)!.value().toFixed(2),
+        temperature: current.variables(0)!.value().toFixed(2),
+        RelativeHumidity: current.variables(1)!.value().toFixed(2),
         // isDay: current.variables(2)!.value() ? "True" : "False",
-        precipitation: current.variables(3)!.value().toFixed(2),
-        rain: current.variables(4)!.value().toFixed(2),
-        showers: current.variables(5)!.value().toFixed(2),
-        weatherCode: current.variables(6)!.value().toFixed(2),
-        cloudCover: current.variables(7)!.value().toFixed(2),
-        pressureMsl: current.variables(8)!.value().toFixed(2),
-        surfacePressure: current.variables(9)!.value().toFixed(2),
-        windSpeed10m: current.variables(10)!.value().toFixed(2),
-        windDirection10m: current.variables(11)!.value().toFixed(2),
-        windGusts10m: current.variables(12)!.value().toFixed(2),
+        Precipitation: current.variables(3)!.value().toFixed(2),
+        Rain: current.variables(4)!.value().toFixed(2),
+        Showers: current.variables(5)!.value().toFixed(2),
+        WeatherCode: current.variables(6)!.value().toFixed(2),
+        CloudCover: current.variables(7)!.value().toFixed(2),
+        Pressure: current.variables(8)!.value().toFixed(2),
+        SurfacePressure: current.variables(9)!.value().toFixed(2),
+        WindSpeed: current.variables(10)!.value().toFixed(2),
+        WindDirection: current.variables(11)!.value().toFixed(2),
+        WindGusts: current.variables(12)!.value().toFixed(2),
       },
       daily: {
         // time: range(
@@ -190,14 +190,14 @@ export default function EnviormentFactors() {
         windDirection10mDominant: daily.variables(14)!.valuesArray()!,
       },
     };
-    // console.log(weatherData);
+    console.log(weatherData);
     setData(weatherData.current);
   }
   // useEffect(() => setLocation, [position]);
   useEffect(
     function () {
       getPosition();
-      // console.log(position);
+      console.log(position);
       setLocation();
     },
     []
@@ -210,7 +210,8 @@ export default function EnviormentFactors() {
   return (
     <div>
       <h1 className="mb-12">
-        Based On your location, In {} at {}
+        Based On your location
+        {/* In {} at {} */}
       </h1>
       <Table>
         <TableCaption>The enviorment factors around you</TableCaption>
