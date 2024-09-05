@@ -29,22 +29,23 @@ function Main() {
   const fileRef = form.register("file");
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     let formData = new FormData();
-    // console.log(data.file[0]);
+    console.log(data);
+    console.log(data.file[0]);
     formData.append("file", data.file[0]);
-    console.log(formData);
-    fetch("http://127.0.0.1:8000/predict", {
-      method: "POST",
-      body: formData,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        // if (data.errors) {
-        //   alert(data.errors);
-        // } else {
-        console.log(data);
-        setMarkup(data);
-        // }
-      });
+    // console.log(formData);
+    // fetch("http://127.0.0.1:8000/predict", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     // if (data.errors) {
+    //     //   alert(data.errors);
+    //     // } else {
+    //     console.log(data);
+    //     setMarkup(data);
+    //     // }
+    //   });
   };
   return (
     <div className="flex flex-col content-center gap-12">
