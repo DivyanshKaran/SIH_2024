@@ -190,7 +190,7 @@ export default function EnviormentFactors() {
         windDirection10mDominant: daily.variables(14)!.valuesArray()!,
       },
     };
-    // console.log(weatherData);
+    console.log(weatherData);
     setData(weatherData.current);
   }
   // useEffect(() => setLocation, [position]);
